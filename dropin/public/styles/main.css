@@ -228,7 +228,7 @@ a:hover {
     margin-top: auto;
   }
 }
-.order-summary-list-list-item-remove-product {
+/* .order-summary-list-list-item-remove-product {
   background: none;
   border: 0;
   cursor: pointer;
@@ -236,7 +236,7 @@ a:hover {
   margin: auto 0;
   padding: 0;
   width: 25px;
-}
+} */
 .cart {
   text-align: center;
 }
@@ -343,8 +343,6 @@ a:hover {
     max-width: 610px;
   }
 }
-
-/* end Payments page */
 
 /* Dropin page */
 

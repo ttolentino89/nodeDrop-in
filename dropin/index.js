@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const hbs = require("express-handlebars");
+// const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const { uuid } = require("uuidv4");
@@ -8,8 +9,12 @@ const { Client, Config, CheckoutAPI } = require("@adyen/api-library");
 const app = express();
 
 app.use(morgan("dev"));
+//Parse JSON bodies
 app.use(express.json());
+//Parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
+// // Parse cookie bodies, and allow setting/getting cookies
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/public")));
 
 //API key, merchant account info etc. passed in through ENV file
@@ -28,6 +33,7 @@ const checkout = new CheckoutAPI(client);
 // // This is more secure than a cookie. In a real application this should be in a database.
 // const paymentDataStore = {};
 
+//Use Handlebars as the view engine
 app.engine(
   "handlebars",
   hbs({
@@ -40,9 +46,7 @@ app.engine(
 
 app.set("view engine", "handlebars");
 
-/* ################# API ENDPOINTS ###################### */
-
-// Get payment methods
+//Get available payment methods
 app.get("/api/getPaymentMethods", async (req, res) => {
   try {
     const response = await checkout.paymentMethods({
@@ -56,7 +60,7 @@ app.get("/api/getPaymentMethods", async (req, res) => {
   }
 });
 
-// Submitting a payment
+//Submitting/initiating a payment
 app.post("/api/initiatePayment", async (req, res) => {
   const currency = findCurrency(req.body.paymentMethod.type);
   const shopperIP = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -65,7 +69,7 @@ app.post("/api/initiatePayment", async (req, res) => {
     const orderRef = uuid();
     // Ideally the data passed here should be computed based on business logic
     const response = await checkout.payments({
-      amount: { currency, value: 1000 }, // value is 10€ in minor units
+      amount: { currency, value: 1500 }, // value is 10€ in minor units
       reference: orderRef,
       merchantAccount: process.env.MERCHANT_ACCOUNT,
       shopperIP,
@@ -170,14 +174,12 @@ app.post("/api/submitAdditionalDetails", async (req, res) => {
   const payload = {};
   payload["details"] = req.body.details;
   payload["paymentData"] = req.body.paymentData;
-
   try {
     // Return the response back to client
     // (for further action handling or presenting result to shopper)
     const response = await checkout.paymentsDetails(payload);
     let resultCode = response.resultCode;
     let action = response.action || null;
-
     res.json({ action, resultCode });
   } catch (err) {
     console.error(`Error: ${err.message}, error code: ${err.errorCode}`);
@@ -185,21 +187,17 @@ app.post("/api/submitAdditionalDetails", async (req, res) => {
   }
 });
 
-/* ################# end API ENDPOINTS ###################### */
-
-/* ################# CLIENT SIDE ENDPOINTS ###################### */
-
-// Index (select a demo)
+//render index
 app.get("/", (req, res) => res.render("index"));
 
-// Cart (continue to checkout)
+//render cart
 app.get("/preview", (req, res) =>
   res.render("preview", {
     type: req.query.type,
   })
 );
 
-// Checkout page (make a payment)
+//render dropin
 app.get("/checkout/:type", async (req, res) => {
   try {
     const response = await checkout.paymentMethods({
@@ -217,16 +215,16 @@ app.get("/checkout/:type", async (req, res) => {
   }
 });
 
-// Authorised result page
+//Transaction authorized
 app.get("/success", (req, res) => res.render("success"));
 
-// Pending result page
+//Transaction pending
 app.get("/pending", (req, res) => res.render("pending"));
 
 // Error result page
 app.get("/error", (req, res) => res.render("error"));
 
-// Refused result page
+//Transaction denied
 app.get("/failed", (req, res) => res.render("failed"));
 
 /* ################# end CLIENT SIDE ENDPOINTS ###################### */
