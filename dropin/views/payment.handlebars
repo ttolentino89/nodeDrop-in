@@ -1,0 +1,19 @@
+{{!-- Hidden divs with data passed from the Express server --}}
+<div id="paymentMethodsResponse" class="hidden">{{{ response }}}</div>
+<div id="originKey" class="hidden">{{ originKey }}</div>
+<div id="type" class="hidden">{{ type }}</div>
+
+<div id="payment-page">
+  <div class="container">
+    {{> customerform}}
+    {{#ifeq type "dropin" }}
+    {{!--   * Drop-in includes styling out-of-the-box, so no additional CSS classes are needed. --}}
+    <div id="dropin"></div>
+    {{/ifeq}}
+  </div>
+  <br />
+  <p>Need more options? Please view instructions on how to add or change payment methods <a href="https://docs.adyen.com/payment-methods#add-payment-methods-to-your-account">here.</a></p>
+</div>
+
+{{!-- Adyen Component client code --}}
+<script type="text/javascript" src="../adyen.js"></script>

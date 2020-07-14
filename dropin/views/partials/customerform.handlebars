@@ -1,0 +1,52 @@
+<div class="customer-form">
+  <div class="address">
+    <div class="billing-header">
+      <div class="billing-header-title">
+        <span class="billing-header-title-name">Billing Information:</span>
+      </div>
+    </div>
+    <form class="address-form" action="/destination" method="get">
+      <div class="address-line" id="addressLine1">
+        <div class="address-input" id="first">
+          <label class="address-label" for="firstName">First Name</label>
+          <input type="text" class="form-control" placeholder="First Name" name="firstName">
+        </div>
+        <div class="address-input" id="last">
+          <label class="address-label" for="lastName">Last Name</label>
+          <input type="text" class="form-control" placeholder="Last Name" name="lastName">
+        </div>
+      </div>
+      <div class="address-line" id="addressLine2">
+        <div class="address-input full-width" id="street">
+          <label class="address-label" for="street">Street</label>
+          <input type="text" class="form-control" placeholder="Street" name="street">
+        </div>
+      </div>
+      <div class="address-line" id="addressLine3">
+        <div class="address-input full-width" id="city">
+          <label class="address-label" for="city">City</label>
+          <input type="text" class="form-control" placeholder="City" name="city">
+        </div>
+      </div>
+      <div class="address-line" id="addressLine4">
+        <div class="address-input" id="state">
+          <label class="address-label" for="state">State</label>
+          <input type="text" class="form-control" placeholder="State" name="stateOrProvince">
+        </div>
+        <div class="address-input" id="zip">
+          <label class="address-label" for="zipcode">Zip Code</label>
+          <input type="text" class="form-control" placeholder="Zip Code" name="postalCode">
+        </div>
+        <div class="address-input" id="country">
+          <label class="address-label" for="country">Country</label>
+          <input type="text" class="form-control" placeholder="Country" name="country" value="United States" readonly>
+        </div>
+      </div>
+      <span class="billing-header-radio">
+        <p>Ship to same address as billing?</p>
+        <input type="radio" checked="checked" disabled/>Yes
+        <input type="radio" disabled />No
+      </span>
+    </form>
+  </div>
+</div>

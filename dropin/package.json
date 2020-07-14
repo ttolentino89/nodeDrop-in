@@ -1,0 +1,32 @@
+{
+  "name": "dropin",
+  "version": "1.0.0",
+  "description": "A simple Drop-in implementation test using Node + Express",
+  "main": "index.js",
+  "dependencies": {
+    "@adyen/api-library": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.0.0",
+    "morgan": "^1.10.0",
+    "uuidv4": "^6.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ttolentino89/nodeDrop-in.git"
+  },
+  "author": "ttolentino89",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ttolentino89/nodeDrop-in/issues"
+  },
+  "homepage": "https://github.com/ttolentino89/nodeDrop-in#readme"
+}
