@@ -12,7 +12,7 @@ To use Drop-in, users need 3 things:
 2. Merchant Account
 3. Origin Key
 
-The API key and merchant account info were provided, but origin keys are dependent on the user's shop url and need to be generated/customized as needed to work properly.
+The API key and merchant account info were provided, but origin keys are dependant on the user's shop url and need to be generated/customized as needed to work properly.
 
 
 ## The starting process:
